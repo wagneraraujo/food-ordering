@@ -15,7 +15,7 @@ const generateToken = (user: IUser): string => {
 // Register a new user
 export const register = async (req: Request, res: Response): Promise<any> => {
   try {
-    const { name, email, password, phone, role } = req.body;
+    const { name, email, password, phone } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({ message: 'Name, email, and password are required' });
@@ -37,7 +37,7 @@ export const register = async (req: Request, res: Response): Promise<any> => {
       email,
       password: hashedPassword,
       phone: phone || '',
-      role: role || 'customer'
+      role: 'customer'
     });
 
     const savedUser = await user.save();
