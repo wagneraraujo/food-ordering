@@ -7,3 +7,17 @@ build/
 .DS_Store
 .vscode/
 .idea/
+
+.claude
+.codex
+.cursor
+.gemini
+
+.kiro
+.opencode
+.pi
+.qoder
+.trae
+
+.agents/skills/impeccable
+.github
