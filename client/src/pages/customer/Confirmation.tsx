@@ -27,6 +27,7 @@ const Confirmation: React.FC = () => {
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string>('');
+  const [simulating, setSimulating] = useState<boolean>(false);
 
   useEffect(() => {
     if (!orderId) {
@@ -51,6 +52,20 @@ const Confirmation: React.FC = () => {
       console.error(err);
       setError(err.response?.data?.message || 'Error loading order details.');
       setLoading(false);
+    }
+  };
+
+  const handleSimulatePayment = async () => {
+    if (!orderId) return;
+    setSimulating(true);
+    try {
+      await axios.post('/api/payments/simulate', { orderId });
+      await fetchOrder();
+    } catch (err: any) {
+      console.error(err);
+      alert(err.response?.data?.message || 'Failed to simulate payment.');
+    } finally {
+      setSimulating(false);
     }
   };
 
@@ -112,6 +127,30 @@ const Confirmation: React.FC = () => {
             <div className="spinner-sm"></div>
             <h2>Awaiting Payment Confirmation...</h2>
             <p>We are waiting for PayHere to confirm your payment. This page updates automatically.</p>
+            <button
+              onClick={handleSimulatePayment}
+              disabled={simulating}
+              className="btn btn-primary mt-4"
+              style={{
+                background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)',
+                border: 'none',
+                color: '#fff',
+                fontWeight: 'bold',
+                padding: '10px 20px',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                boxShadow: '0 4px 12px rgba(245, 158, 11, 0.3)',
+                transition: 'transform 0.2s ease, opacity 0.2s ease',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'scale(1.03)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              {simulating ? 'Simulating...' : '⚡ Simulate Payment Success (Dev Mode)'}
+            </button>
           </div>
         )}
 

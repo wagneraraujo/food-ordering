@@ -7,7 +7,6 @@ const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [phone, setPhone] = useState('');
-  const [role, setRole] = useState('customer'); // Default to customer
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
@@ -19,7 +18,7 @@ const Register: React.FC = () => {
     setLoading(true);
 
     try {
-      const registeredUser = await register(name, email, password, phone, role);
+      const registeredUser = await register(name, email, password, phone, 'customer');
       if (registeredUser.role === 'admin') {
         navigate('/admin');
       } else {
@@ -91,19 +90,6 @@ const Register: React.FC = () => {
               placeholder="Min 6 characters"
               required
             />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="role">Account Type</label>
-            <select
-              id="role"
-              className="form-control"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-            >
-              <option value="customer">Customer</option>
-              <option value="admin">Administrator</option>
-            </select>
           </div>
 
           <button type="submit" className="btn btn-primary btn-block" disabled={loading}>

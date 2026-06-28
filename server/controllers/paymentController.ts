@@ -160,3 +160,42 @@ export const handlePaymentNotification = async (req: Request, res: Response): Pr
     res.status(500).json({ message: 'Server error handling payment notification', error: error.message });
   }
 };
+
+// Simulate server-to-server payment notification in local development
+export const simulatePaymentNotification = async (req: Request, res: Response): Promise<any> => {
+  try {
+    const { orderId } = req.body;
+    if (!orderId) {
+      return res.status(400).json({ message: 'Order ID is required' });
+    }
+
+    const order = await Order.findOne({ orderId });
+    if (!order) {
+      return res.status(404).json({ message: `Order not found with orderId: ${orderId}` });
+    }
+
+    // Update status to Preparing / Paid
+    if (order.status === 'Pending') {
+      order.status = 'Preparing';
+      order.paymentStatus = 'Paid';
+      await order.save();
+    }
+
+    // Log the transaction in the Payment collection
+    const paymentRecord = new Payment({
+      order: order._id,
+      paymentId: `SIM-${Date.now()}`,
+      status: '2', // Success code
+      amount: order.total,
+      currency: 'USD',
+      method: 'Simulated PayHere Success',
+      payhereRawData: { simulated: true, orderId }
+    });
+    await paymentRecord.save();
+
+    res.status(200).json({ message: 'Payment simulation successful', order });
+  } catch (error: any) {
+    res.status(500).json({ message: 'Server error simulating payment notification', error: error.message });
+  }
+};
+
