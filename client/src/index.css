@@ -30,6 +30,14 @@
   --info-bg: rgba(59, 130, 246, 0.1);
   --info-border: rgba(59, 130, 246, 0.3);
 
+  --btn-primary-bg: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
+  --btn-primary-hover-bg: linear-gradient(135deg, var(--accent-hover) 0%, #7c3aed 100%);
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover-text: #ffffff;
+  --btn-primary-shadow: 0 4px 12px rgba(170, 59, 255, 0.2);
+  --btn-primary-hover-shadow: 0 6px 16px rgba(170, 59, 255, 0.3);
+  --accent-contrast: #ffffff;
+
   --sans: 'Outfit', system-ui, -apple-system, sans-serif;
   --mono: ui-monospace, SFMono-Regular, Consolas, monospace;
 
@@ -64,6 +72,14 @@
     --warning-bg: rgba(245, 158, 11, 0.15);
     --danger-bg: rgba(239, 68, 68, 0.15);
     --info-bg: rgba(59, 130, 246, 0.15);
+    
+    --btn-primary-bg: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    --btn-primary-hover-bg: linear-gradient(135deg, #a78bfa 0%, #7c3aed 100%);
+    --btn-primary-text: #ffffff;
+    --btn-primary-hover-text: #ffffff;
+    --btn-primary-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+    --btn-primary-hover-shadow: 0 6px 16px rgba(139, 92, 246, 0.45);
+    --accent-contrast: #0d0c10;
   }
 }
 
@@ -166,15 +182,16 @@ a:hover {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent) 0%, #8b5cf6 100%);
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(170, 59, 255, 0.2);
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  box-shadow: var(--btn-primary-shadow);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background: linear-gradient(135deg, var(--accent-hover) 0%, #7c3aed 100%);
+  background: var(--btn-primary-hover-bg);
+  color: var(--btn-primary-hover-text);
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(170, 59, 255, 0.3);
+  box-shadow: var(--btn-primary-hover-shadow);
 }
 
 .btn-primary:active:not(:disabled) {
@@ -190,7 +207,10 @@ a:hover {
 
 .btn-secondary:hover:not(:disabled) {
   background-color: var(--input-bg);
-  border-color: var(--text-muted);
+  border-color: var(--accent-border);
+  color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
 }
 
 .btn-danger {
