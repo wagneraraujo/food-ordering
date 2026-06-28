@@ -3,6 +3,7 @@ import axios from 'axios';
 
 // Configure Axios base URL
 axios.defaults.baseURL = (import.meta.env.VITE_API_URL as string) || 'http://localhost:5000';
+axios.defaults.headers.common['Bypass-Tunnel-Reminder'] = 'true';
 
 export interface UserInfo {
   id: string;

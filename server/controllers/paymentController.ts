@@ -58,6 +58,17 @@ export const initPayment = async (req: Request, res: Response): Promise<any> => 
     const hashInput = merchantId + order.orderId + amountFormatted + currency + hashedSecret;
     const checkoutHash = md5(hashInput).toUpperCase();
 
+    console.log('--- PAYHERE DEBUG CHECKOUT ---');
+    console.log('Merchant ID:', merchantId);
+    console.log('Order ID:', order.orderId);
+    console.log('Amount:', amountFormatted);
+    console.log('Currency:', currency);
+    console.log('Merchant Secret (raw):', merchantSecret.length > 8 ? `${merchantSecret.slice(0, 4)}...${merchantSecret.slice(-4)}` : 'too short');
+    console.log('Hashed Secret (MD5 upper):', hashedSecret);
+    console.log('Concat Hash Input:', hashInput);
+    console.log('Final Hash (MD5 upper):', checkoutHash);
+    console.log('------------------------------');
+
     // Construct comma-separated item names
     const itemsList = order.items.map(i => i.name).join(', ');
 
