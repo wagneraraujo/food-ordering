@@ -151,13 +151,13 @@ const Confirmation: React.FC = () => {
                 <tr key={idx}>
                   <td>{item.name}</td>
                   <td className="text-right">{item.quantity}</td>
-                  <td className="text-right">LKR {item.price.toLocaleString()}</td>
-                  <td className="text-right">LKR {(item.price * item.quantity).toLocaleString()}</td>
+                  <td className="text-right">${item.price.toLocaleString()}</td>
+                  <td className="text-right">${(item.price * item.quantity).toLocaleString()}</td>
                 </tr>
               ))}
               <tr className="grand-total-row">
                 <td colSpan={3}>Total Paid</td>
-                <td className="text-right">LKR {order.total.toLocaleString()}</td>
+                <td className="text-right">${order.total.toLocaleString()}</td>
               </tr>
             </tbody>
           </table>

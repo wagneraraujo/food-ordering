@@ -46,7 +46,7 @@ const seedData = async () => {
       {
         name: 'Margherita Pizza',
         description: 'Classic pizza with tomato sauce and mozzarella',
-        price: 1200,
+        price: 12.99,
         category: 'Pizza',
         image: 'https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=600&q=80',
         available: true
@@ -54,7 +54,7 @@ const seedData = async () => {
       {
         name: 'Cheeseburger',
         description: 'Beef burger with cheese and lettuce',
-        price: 950,
+        price: 8.99,
         category: 'Burger',
         image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80',
         available: true
@@ -62,7 +62,7 @@ const seedData = async () => {
       {
         name: 'Chocolate Cake',
         description: 'Fudgy double chocolate cake slice',
-        price: 600,
+        price: 4.99,
         category: 'Cake',
         image: 'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80',
         available: true
@@ -70,7 +70,7 @@ const seedData = async () => {
       {
         name: 'Coca Cola',
         description: 'Chilled 330ml can',
-        price: 250,
+        price: 1.99,
         category: 'Drink',
         image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=600&q=80',
         available: true

@@ -9,6 +9,21 @@ const md5 = (string: string): string => {
   return crypto.createHash('md5').update(string).digest('hex').toUpperCase();
 };
 
+// Safe helper to decode base64 encoded merchant secret keys
+const getDecodedSecret = (secret: string): string => {
+  try {
+    // If it is a base64 encoded string, decode it.
+    // PayHere secrets are alphanumeric strings, which when base64 encoded have a valid format.
+    const decoded = Buffer.from(secret, 'base64').toString('ascii');
+    if (/^[a-zA-Z0-9]+$/.test(decoded)) {
+      return decoded;
+    }
+  } catch (e) {
+    // Return original if decoding fails
+  }
+  return secret;
+};
+
 // Generate PayHere Checkout parameters (Customer only)
 export const initPayment = async (req: Request, res: Response): Promise<any> => {
   try {
@@ -33,15 +48,15 @@ export const initPayment = async (req: Request, res: Response): Promise<any> => 
     }
 
     const merchantId = process.env.PAYHERE_MERCHANT_ID || '1230000';
-    const merchantSecret = process.env.PAYHERE_MERCHANT_SECRET || 'sandbox_merchant_secret_key_123';
-    const currency = 'LKR';
+    const merchantSecret = getDecodedSecret(process.env.PAYHERE_MERCHANT_SECRET || 'sandbox_merchant_secret_key_123');
+    const currency = 'USD';
     const amountFormatted = order.total.toFixed(2);
 
     // Calculate MD5 hash for PayHere Checkout form
     // Hash = MD5(MerchantID + OrderID + Amount + Currency + MD5(MerchantSecret))
-    const hashedSecret = md5(merchantSecret);
+    const hashedSecret = md5(merchantSecret).toUpperCase();
     const hashInput = merchantId + order.orderId + amountFormatted + currency + hashedSecret;
-    const checkoutHash = md5(hashInput);
+    const checkoutHash = md5(hashInput).toUpperCase();
 
     // Construct comma-separated item names
     const itemsList = order.items.map(i => i.name).join(', ');
@@ -97,13 +112,13 @@ export const handlePaymentNotification = async (req: Request, res: Response): Pr
       return res.status(400).json({ message: 'Missing webhook payload parameters' });
     }
 
-    const merchantSecret = process.env.PAYHERE_MERCHANT_SECRET || 'sandbox_merchant_secret_key_123';
+    const merchantSecret = getDecodedSecret(process.env.PAYHERE_MERCHANT_SECRET || 'sandbox_merchant_secret_key_123');
 
     // Recalculate signature:
     // MD5(merchant_id + order_id + payhere_amount + payhere_currency + status_code + MD5(merchant_secret))
-    const hashedSecret = md5(merchantSecret);
+    const hashedSecret = md5(merchantSecret).toUpperCase();
     const localSigInput = merchant_id + order_id + payhere_amount + payhere_currency + status_code + hashedSecret;
-    const localSig = md5(localSigInput);
+    const localSig = md5(localSigInput).toUpperCase();
 
     if (localSig !== md5sig.toUpperCase()) {
       console.warn(`Payment verification failed. Local signature: ${localSig}, Received: ${md5sig}`);

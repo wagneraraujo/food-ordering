@@ -146,7 +146,7 @@ const AdminDashboard: React.FC = () => {
                         ))}
                       </ul>
                     </td>
-                    <td>LKR {order.total.toLocaleString()}</td>
+                    <td>${order.total.toLocaleString()}</td>
                     <td>
                       <span className={`badge ${order.paymentStatus === 'Paid' ? 'status-ready' : 'status-pending'}`}>
                         {order.paymentStatus}

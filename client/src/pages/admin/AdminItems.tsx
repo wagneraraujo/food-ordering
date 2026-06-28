@@ -168,7 +168,7 @@ const AdminItems: React.FC = () => {
             </div>
 
             <div className="form-group">
-              <label htmlFor="itemPrice">Price (LKR) *</label>
+              <label htmlFor="itemPrice">Price (USD) *</label>
               <input
                 id="itemPrice"
                 type="number"
@@ -242,11 +242,12 @@ const AdminItems: React.FC = () => {
                     src={item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=60'}
                     alt={item.name}
                     className="item-img"
+                    loading="lazy"
                   />
                   <div className="item-info">
                     <h4>{item.name}</h4>
                     <span className="badge status-ready">{item.category}</span>
-                    <p className="price">LKR {item.price.toLocaleString()}</p>
+                    <p className="price">${item.price.toLocaleString()}</p>
                     <p className="status-label">
                       Status: {item.available ? '🟢 Live' : '🔴 Hidden'}
                     </p>

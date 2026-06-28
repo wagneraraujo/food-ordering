@@ -101,7 +101,7 @@ const OrderHistory: React.FC = () => {
                 
                 <div className="order-pricing-status">
                   <div className="price-label">Total Amount:</div>
-                  <div className="price-value">LKR {order.total.toLocaleString()}</div>
+                  <div className="price-value">${order.total.toLocaleString()}</div>
                   
                   <div className="status-label-group">
                     <span className={`badge ${getStatusClass(order.status)}`}>{order.status}</span>

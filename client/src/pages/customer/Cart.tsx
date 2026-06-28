@@ -111,7 +111,7 @@ const Cart: React.FC = () => {
                 <div className="cart-item-info">
                   <h3>{item.name}</h3>
                   <p className="cart-item-cat">{item.category}</p>
-                  <p className="cart-item-price">LKR {item.price.toLocaleString()}</p>
+                  <p className="cart-item-price">${item.price.toLocaleString()}</p>
                 </div>
                 <div className="cart-item-actions">
                   <div className="qty-selector">
@@ -134,7 +134,7 @@ const Cart: React.FC = () => {
                   </button>
                 </div>
                 <div className="cart-item-subtotal">
-                  LKR {(item.price * item.quantity).toLocaleString()}
+                  ${(item.price * item.quantity).toLocaleString()}
                 </div>
               </div>
             ))}
@@ -150,7 +150,7 @@ const Cart: React.FC = () => {
               </div>
               <div className="summary-row total-row">
                 <span>Total:</span>
-                <span>LKR {cartTotal.toLocaleString()}</span>
+                <span>${cartTotal.toLocaleString()}</span>
               </div>
 
               {user ? (

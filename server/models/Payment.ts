@@ -32,7 +32,7 @@ const paymentSchema = new Schema<IPayment>({
   },
   currency: {
     type: String,
-    default: 'LKR'
+    default: 'USD'
   },
   method: {
     type: String

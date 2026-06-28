@@ -129,6 +129,7 @@ const Menu: React.FC = () => {
                     src={item.image || 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=500&auto=format&fit=crop&q=60'}
                     alt={item.name}
                     className="menu-card-img"
+                    loading="lazy"
                   />
                   <span className="menu-card-category">{item.category}</span>
                 </div>
@@ -136,13 +137,14 @@ const Menu: React.FC = () => {
                   <h3 className="menu-card-title">{item.name}</h3>
                   <p className="menu-card-desc">{item.description}</p>
                   <div className="menu-card-footer">
-                    <span className="menu-card-price">LKR {item.price.toLocaleString()}</span>
+                    <span className="menu-card-price">${item.price.toLocaleString()}</span>
                     
                     <div className="menu-card-action">
                       <div className="qty-selector">
                         <button 
                           className="qty-btn" 
                           onClick={() => handleQuantityChange(item._id, currentQty - 1)}
+                          aria-label="Decrease quantity"
                         >-</button>
                         <input
                           type="number"
@@ -150,10 +152,12 @@ const Menu: React.FC = () => {
                           min="1"
                           value={currentQty}
                           onChange={(e) => handleQuantityChange(item._id, e.target.value)}
+                          aria-label="Quantity"
                         />
                         <button 
                           className="qty-btn" 
                           onClick={() => handleQuantityChange(item._id, currentQty + 1)}
+                          aria-label="Increase quantity"
                         >+</button>
                       </div>
                       <button
