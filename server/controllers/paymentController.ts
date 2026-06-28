@@ -9,20 +9,8 @@ const md5 = (string: string): string => {
   return crypto.createHash('md5').update(string).digest('hex').toUpperCase();
 };
 
-// Safe helper to decode base64 encoded merchant secret keys
-const getDecodedSecret = (secret: string): string => {
-  try {
-    // If it is a base64 encoded string, decode it.
-    // PayHere secrets are alphanumeric strings, which when base64 encoded have a valid format.
-    const decoded = Buffer.from(secret, 'base64').toString('ascii');
-    if (/^[a-zA-Z0-9]+$/.test(decoded)) {
-      return decoded;
-    }
-  } catch (e) {
-    // Return original if decoding fails
-  }
-  return secret;
-};
+// Note: We use process.env.PAYHERE_MERCHANT_SECRET directly as-is without Base64 decoding,
+// as PayHere expects the literal Merchant Secret displayed in the dashboard.
 
 // Generate PayHere Checkout parameters (Customer only)
 export const initPayment = async (req: Request, res: Response): Promise<any> => {
@@ -48,7 +36,7 @@ export const initPayment = async (req: Request, res: Response): Promise<any> => 
     }
 
     const merchantId = process.env.PAYHERE_MERCHANT_ID || '1230000';
-    const merchantSecret = getDecodedSecret(process.env.PAYHERE_MERCHANT_SECRET || 'sandbox_merchant_secret_key_123');
+    const merchantSecret = process.env.PAYHERE_MERCHANT_SECRET || 'sandbox_merchant_secret_key_123';
     const currency = 'USD';
     const amountFormatted = order.total.toFixed(2);
 
@@ -123,7 +111,7 @@ export const handlePaymentNotification = async (req: Request, res: Response): Pr
       return res.status(400).json({ message: 'Missing webhook payload parameters' });
     }
 
-    const merchantSecret = getDecodedSecret(process.env.PAYHERE_MERCHANT_SECRET || 'sandbox_merchant_secret_key_123');
+    const merchantSecret = process.env.PAYHERE_MERCHANT_SECRET || 'sandbox_merchant_secret_key_123';
 
     // Recalculate signature:
     // MD5(merchant_id + order_id + payhere_amount + payhere_currency + status_code + MD5(merchant_secret))
